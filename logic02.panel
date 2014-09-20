@@ -1,0 +1,85 @@
+## Copyright (c) 2014 Mimetics Inc.
+## All Rights Reserved
+##
+## THIS SOFTWARE IS PROVIDED BY MIMETICS "AS IS" WITHOUT ANY EXPRESSED OR 
+## IMPLIED WARRANTIES.  IN NO CASE SHALL MIMETICS OR ANY CONTRIBUTORS BE
+## LIABLE IN ANY DAMAGES CAUSED BY THE USE OF THIS SOFTWARE.  
+##
+## FileName: logic02.panel
+## Version : 02.0
+##
+## Author  : Myke Predko
+##
+## Description:
+##   - Panel to provide simple logic programming on Jade Robot
+##
+## Release History:
+##  Logic1  - First Version
+##  logic02 - Renamed to support GitHub Project
+
+
+dimensions  = 102, 53;
+
+#  Top Line
+icon       = 1stPtr,     rnNow.bmp,           0,   1,  1,   8, 9,               nostop,   show, rounded;
+icon       = 1stSnsrUp,  rnUp.bmp,            0,   9,  1,   7, 9,                 stop,   show, rounded;
+text       = 1stSnsr,    "No",             2, 0,  16,  1,            5x7, left, nostop,   show, normal;
+icon       = 1stSnsrDn,  rnDn.bmp,            0,  30,  1,   7, 9,                 stop,   show, rounded;
+text       = 1stLT,      "<",              1, 0,  37,  1,            5x7, left, nostop,   show, normal;
+icon       = 1stDistUp,  rnUp.bmp,            0,  44,  1,   7, 9,                 stop,   show, rounded;
+text       = 1stDist,    "##",             2, 0,  51,  1,            5x7, left, nostop,   show, normal;
+icon       = 1stDistDn,  rnDn.bmp,            0,  65,  1,   7, 9,                 stop,   show, rounded;
+text       = 1stDash,    "-",              1, 0,  72,  1,            5x7, left, nostop,   show, normal;
+icon       = 1stActUp,   rnUp.bmp,            0,  80,  1,   7, 9,                 stop,   show, rounded;
+text       = 1stAct,     "#",              1, 0,  87,  1,            5x7, left, nostop,   show, normal;
+icon       = 1stActDn,   rnDn.bmp,            0,  95,  1,   7, 9,                 stop,   show, rounded;
+
+#  2nd Line
+icon       = 2ndPtr,     rnNow.bmp,           0,   1, 11,   8, 9,               nostop,   show, rounded;
+icon       = 2ndSnsrUp,  rnUp.bmp,            0,   9, 11,   7, 9,                 stop,   show, rounded;
+text       = 2ndSnsr,    "No",             2, 0,  16, 11,            5x7, left, nostop,   show, normal;
+icon       = 2ndSnsrDn,  rnDn.bmp,            0,  30, 11,   7, 9,                 stop,   show, rounded;
+text       = 2ndLT,      "<",              1, 0,  37, 11,            5x7, left, nostop,   show, normal;
+icon       = 2ndDistUp,  rnUp.bmp,            0,  44, 11,   7, 9,                 stop,   show, rounded;
+text       = 2ndDist,    "##",             2, 0,  51, 11,            5x7, left, nostop,   show, normal;
+icon       = 2ndDistDn,  rnDn.bmp,            0,  65, 11,   7, 9,                 stop,   show, rounded;
+text       = 2ndDash,    "-",              1, 0,  72, 11,            5x7, left, nostop,   show, normal;
+icon       = 2ndActUp,   rnUp.bmp,            0,  80, 11,   7, 9,                 stop,   show, rounded;
+text       = 2ndAct,     "#",              1, 0,  87, 11,            5x7, left, nostop,   show, normal;
+icon       = 2ndActDn,   rnDn.bmp,            0,  95, 11,   7, 9,                 stop,   show, rounded;
+
+#  3rd Line
+icon       = 3rdPtr,     rnNow.bmp,           0,   1, 21,   8, 9,               nostop,   show, rounded;
+icon       = 3rdSnsrUp,  rnUp.bmp,            0,   9, 21,   7, 9,                 stop,   show, rounded;
+text       = 3rdSnsr,    "No",             2, 0,  16, 21,            5x7, left, nostop,   show, normal;
+icon       = 3rdSnsrDn,  rnDn.bmp,            0,  30, 21,   7, 9,                 stop,   show, rounded;
+text       = 3rdLT,      "<",              1, 0,  37, 21,            5x7, left, nostop,   show, normal;
+icon       = 3rdDistUp,  rnUp.bmp,            0,  44, 21,   7, 9,                 stop,   show, rounded;
+text       = 3rdDist,    "##",             2, 0,  51, 21,            5x7, left, nostop,   show, normal;
+icon       = 3rdDistDn,  rnDn.bmp,            0,  65, 21,   7, 9,                 stop,   show, rounded;
+text       = 3rdDash,    "-",              1, 0,  72, 21,            5x7, left, nostop,   show, normal;
+icon       = 3rdActUp,   rnUp.bmp,            0,  80, 21,   7, 9,                 stop,   show, rounded;
+text       = 3rdAct,     "#",              1, 0,  87, 21,            5x7, left, nostop,   show, normal;
+icon       = 3rdActDn,   rnDn.bmp,            0,  95, 21,   7, 9,                 stop,   show, rounded;
+
+#  4th Line
+icon       = 4thPtr,     rnNow.bmp,           0,   1, 31,   8, 9,               nostop,   show, rounded;
+icon       = 4thSnsrUp,  rnUp.bmp,            0,   9, 31,   7, 9,                 stop,   show, rounded;
+text       = 4thSnsr,    "No",             2, 0,  16, 31,            5x7, left, nostop,   show, normal;
+icon       = 4thSnsrDn,  rnDn.bmp,            0,  30, 31,   7, 9,                 stop,   show, rounded;
+text       = 4thLT,      "<",              1, 0,  37, 31,            5x7, left, nostop,   show, normal;
+icon       = 4thDistUp,  rnUp.bmp,            0,  44, 31,   7, 9,                 stop,   show, rounded;
+text       = 4thDist,    "##",             2, 0,  51, 31,            5x7, left, nostop,   show, normal;
+icon       = 4thDistDn,  rnDn.bmp,            0,  65, 31,   7, 9,                 stop,   show, rounded;
+text       = 4thDash,    "-",              1, 0,  72, 31,            5x7, left, nostop,   show, normal;
+icon       = 4thActUp,   rnUp.bmp,            0,  80, 31,   7, 9,                 stop,   show, rounded;
+text       = 4thAct,     "#",              1, 0,  87, 31,            5x7, left, nostop,   show, normal;
+icon       = 4thActDn,   rnDn.bmp,            0,  95, 31,   7, 9,                 stop,   show, rounded;
+
+#  Bottom Line
+icon       = 5thPtr,     rnNow.bmp,           0,   1, 41,   8, 9,               nostop,   show, rounded;
+text       = 5thHdr,     "Frwrd",          5, 0,   9, 41,            5x7, left, nostop,   show, normal;
+
+text       = logicRun,   "Run",            3, 0,  47, 41,            5x7, left,   stop,   show, normal;
+
+text       = logicStop,  "Stop",           4, 0,  72, 41,            5x7, left,   stop,   show, normal;

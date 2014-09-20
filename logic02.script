@@ -1,0 +1,381 @@
+// Copyright (c) 2014 Mimetics Inc.
+// All Rights Reserved
+//
+// THIS SOFTWARE IS PROVIDED BY MIMETICS "AS IS" WITHOUT ANY EXPRESSED OR 
+// IMPLIED WARRANTIES.  IN NO CASE SHALL MIMETICS OR ANY CONTRIBUTORS BE
+// LIABLE IN ANY DAMAGES CAUSED BY THE USE OF THIS SOFTWARE.  
+//
+// FileName: logic02.script
+// Version : 02.0
+//
+// Author  : myke predko
+//
+// Description: Provide On Robot Programming Option with the ability to specify Object Sensor test values and Responses
+//
+// Release History:
+//  Logic1 - Logic Demo Program
+//         - Organized for _Header
+//       Initial Fixes:
+//         - Spaced the Panel Elements to make them more readable
+//         - Increased Time in loop to eliminate timeouts
+//         - Added LED to indicate what is active
+//  logic02 - Renamed to work with GitHub 
+meta("icon",                "logic02.b");
+meta("description",         "Logic Demo:A Different Approach");
+//  
+int                         i;
+str                         temp;
+str                         panelStatus;
+str                         panelControl;
+
+
+    syscall(motorleftset, itos(0));  syscall(motorrightset, itos(0));
+
+    syscall(loadpanelfile, "_exec2.p");
+    syscall(setpanelicon, "tools:logic02.b");
+    syscall(setpaneltext, "pgmname:Logic Demo");
+    syscall(loadsubpanelfile, "logic02.p");
+    clearLine("1st");
+    clearLine("2nd");
+    clearLine("3rd");
+    clearLine("4th");
+    syscall(setpanelicon, "5thPtr:rnNBl.b");
+    syscall(setactivepanelcontrol, "4thSnsrDn");
+    syscall(nostoppanelcontrol, "logicStop");
+    syscall(runpanelfile, "");
+
+    for (;;) {
+
+        for (; "RUN:" == syscall(tostring, "4:" + (panelStatus = syscall(getactivepanelstatus, "")));) {
+        }
+        
+        if ("return" == (panelControl = syscall(fromstring, "4:" + panelStatus))) {
+            syscall(done, "");
+        }
+        else if ("Snsr" == syscall(substring, "3:7:" + panelControl)) {
+            if ("Up" == syscall(substring, "7:9:" + panelControl)) {
+                if ("  " == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr")) {
+                    //  Do nothing - Blank
+                }
+                else if ("LF" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr")) {
+                    clearLine(syscall(tostring, "3:" + panelControl));
+                }
+                else if ("LS" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr")) {
+                    syscall(setpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr:" + "LF");
+                }
+                else if ("RF" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr")) {
+                    syscall(setpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr:" + "LS");
+                }
+                else if ("RS" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr")) {
+                    syscall(setpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr:" + "RF");
+                }
+            }
+            else {  //  "Dn"
+                if ("  " == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr")) {
+                    initLine(syscall(tostring, "3:" + panelControl));
+                }
+                else if ("LF" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr")) {
+                    syscall(setpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr:" + "LS");
+                }
+                else if ("LS" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr")) {
+                    syscall(setpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr:" + "RF");
+                }
+                else if ("RF" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr")) {
+                    syscall(setpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr:" + "RS");
+                }
+                else if ("RS" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Snsr")) {
+                    //  Do nothing - Nothing More to Check
+                }
+            }
+        }
+        else if ("Dist" == syscall(substring, "3:7:" + panelControl)) {
+            temp = syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Dist");
+            if ("5 " == temp) {
+                i = 5;
+            }
+            else {
+                i = stoi(temp);
+            }
+            if ("Up" == syscall(substring, "7:9:" + panelControl)) {
+                if (95 > i) {
+                    i += 5;
+                }   
+            }
+            else {  //  "Dn"
+                if (5 < i) {
+                    i -= 5;
+                }   
+            }
+            syscall(setpaneltext, syscall(tostring, "3:" + panelControl) + "Dist:" + itos(i));
+        }
+        else if ("Act" == syscall(substring, "3:6:" + panelControl)) {
+            if ("Up" == syscall(substring, "6:8:" + panelControl)) {
+                if ("F" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Act")) {
+                    //  Do nothing - At the top of the list
+                }
+                else if ("B" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Act")) {
+                    syscall(setpaneltext, syscall(tostring, "3:" + panelControl) + "Act:" + "F");
+                }
+                else if ("L" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Act")) {
+                    syscall(setpaneltext, syscall(tostring, "3:" + panelControl) + "Act:" + "B");
+                }
+                else if ("R" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Act")) {
+                    syscall(setpaneltext, syscall(tostring, "3:" + panelControl) + "Act:" + "L");
+                }
+                else if ("S" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Act")) {
+                    syscall(setpaneltext, syscall(tostring, "3:" + panelControl) + "Act:" + "R");
+                }
+            }
+            else {  //  "Dn"
+                if ("F" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Act")) {
+                    syscall(setpaneltext, syscall(tostring, "3:" + panelControl) + "Act:" + "B");
+                }
+                else if ("B" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Act")) {
+                    syscall(setpaneltext, syscall(tostring, "3:" + panelControl) + "Act:" + "L");
+                }
+                else if ("L" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Act")) {
+                    syscall(setpaneltext, syscall(tostring, "3:" + panelControl) + "Act:" + "R");
+                }
+                else if ("R" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Act")) {
+                    syscall(setpaneltext, syscall(tostring, "3:" + panelControl) + "Act:" + "S");
+                }
+                else if ("S" == syscall(getpaneltext, syscall(tostring, "3:" + panelControl) + "Act")) {
+                    //  Do nothing - At the bottom of the list
+                }
+            }
+        }
+        else if ("logicRun" == panelControl) {
+            controlsOff("1st");
+            controlsOff("2nd");
+            controlsOff("3rd");
+            controlsOff("4th");
+            syscall(nostoppanelcontrol, "logicRun");        syscall(stoppanelcontrol, "logicStop");
+                                                            syscall(setactivepanelcontrol, "logicStop");
+            syscall(runpanelfile, "");
+//            syscall(setsynch, itos(500));  //  Start with 500ms wait
+            syscall(setsynch, itos(250));  
+//            syscall(setsynch, itos(200));  
+//            syscall(setsynch, itos(175));  
+//            syscall(setsynch, itos(150));  
+//            syscall(setsynch, itos(125));  
+            for (; "RUN:" == syscall(tostring, "4:" + (panelStatus = syscall(getactivepanelstatus, "")));) {
+                if (testState("1st")) {
+                    doLED("1st");
+                    setArrow("1st");
+                    doState("1st");
+                }
+                else if (testState("2nd")) {
+                    doLED("2nd");
+                    setArrow("2nd");
+                    doState("2nd");
+                }
+                else if (testState("3rd")) {
+                    doLED("3rd");
+                    setArrow("3rd");
+                    doState("3rd");
+                }
+                else if (testState("4th")) {
+                    doLED("4th");
+                    setArrow("4th");
+                    doState("4th");
+                }
+                else {
+                    setArrow("5th");
+                    doState("5th");
+                }
+                syscall(waitforsynch, "");  //  Wait to Loop Again
+            }
+            syscall(stopsynch, "");  //  Start with 500ms wait
+            syscall(motorleftset, itos(0));     syscall(motorrightset, itos(0));
+        
+            if ("return" == (panelControl = syscall(fromstring, "4:" + panelStatus))) {
+                syscall(done, "");
+            }
+            else {
+                controlsOn("1st");
+                controlsOn("2nd");
+                controlsOn("3rd");
+                controlsOn("4th");
+                controlsOn("4th");
+                syscall(setpanelicon, "1stPtr:rnNBl.b");
+                syscall(setpanelicon, "2ndPtr:rnNBl.b");
+                syscall(setpanelicon, "3rdPtr:rnNBl.b");
+                syscall(setpanelicon, "4thPtr:rnNBl.b");
+                syscall(setpanelicon, "5thPtr:rnNBl.b");
+                syscall(setactivepanelcontrol, "4thSnsrUp");
+                syscall(stoppanelcontrol, "logicRun");          syscall(nostoppanelcontrol, "logicStop");
+            }
+        }
+        syscall(runpanelfile, "");
+    }
+
+clearLine(str line) {
+
+    syscall(setpanelicon, line + "Ptr:rnNBl.b");
+    syscall(setpaneltext, line + "Snsr:  ");
+    syscall(setpaneltext, line + "LT: ");
+    syscall(setpanelicon, line + "DistUp:rnBl.b");  syscall(nostoppanelcontrol, line + "DistUp");
+    syscall(setpaneltext, line + "Dist:  ");
+    syscall(setpanelicon, line + "DistDn:rnBl.b");  syscall(nostoppanelcontrol, line + "DistDn");
+    syscall(setpaneltext, line + "Dash: ");
+    syscall(setpanelicon, line + "ActUp:rnBl.b");   syscall(nostoppanelcontrol, line + "ActUp");
+    syscall(setpaneltext, line + "Act: ");
+    syscall(setpanelicon, line + "ActDn:rnBl.b");   syscall(nostoppanelcontrol, line + "ActDn");
+
+}
+
+initLine(str line) {
+
+    syscall(setpanelicon, line + "Ptr:rnNBl.b");
+    syscall(setpaneltext, line + "Snsr:LF");
+    syscall(setpaneltext, line + "LT:<");
+    syscall(setpanelicon, line + "DistUp:rnUp.b");  syscall(stoppanelcontrol, line + "DistUp");
+    syscall(setpaneltext, line + "Dist:50");
+    syscall(setpanelicon, line + "DistDn:rnDn.b");  syscall(stoppanelcontrol, line + "DistDn");
+    syscall(setpaneltext, line + "Dash:-");
+    syscall(setpanelicon, line + "ActUp:rnUp.b");   syscall(stoppanelcontrol, line + "ActUp");
+    syscall(setpaneltext, line + "Act:F");
+    syscall(setpanelicon, line + "ActDn:rnDn.b");   syscall(stoppanelcontrol, line + "ActDn");
+
+}
+
+controlsOff(str line) {
+
+    syscall(setpanelicon, line + "SnsrUp:rnBl.b");  syscall(nostoppanelcontrol, line + "SnsrUp");
+    syscall(setpanelicon, line + "SnsrDn:rnBl.b");  syscall(nostoppanelcontrol, line + "SnsrDn");
+    syscall(setpanelicon, line + "DistUp:rnBl.b");  syscall(nostoppanelcontrol, line + "DistUp");
+    syscall(setpanelicon, line + "DistDn:rnBl.b");  syscall(nostoppanelcontrol, line + "DistDn");
+    syscall(setpanelicon, line + "ActUp:rnBl.b");   syscall(nostoppanelcontrol, line + "ActUp");
+    syscall(setpanelicon, line + "ActDn:rnBl.b");   syscall(nostoppanelcontrol, line + "ActDn");
+
+}
+
+controlsOn(str line) {
+
+    syscall(setpanelicon, line + "SnsrUp:rnUp.b");  syscall(stoppanelcontrol, line + "SnsrUp");
+    syscall(setpanelicon, line + "SnsrDn:rnDn.b");  syscall(stoppanelcontrol, line + "SnsrDn");
+    if ("  " != syscall(getpaneltext, line + "Snsr")) {
+        syscall(setpanelicon, line + "DistUp:rnUp.b");  syscall(stoppanelcontrol, line + "DistUp");
+        syscall(setpanelicon, line + "DistDn:rnDn.b");  syscall(stoppanelcontrol, line + "DistDn");
+        syscall(setpanelicon, line + "ActUp:rnUp.b");   syscall(stoppanelcontrol, line + "ActUp");
+        syscall(setpanelicon, line + "ActDn:rnDn.b");   syscall(stoppanelcontrol, line + "ActDn");
+    }
+
+}
+
+int testState(str line) {
+str sensorValue;
+int syscallAPI;
+int testValue;
+int actualValue;
+
+
+    if ("  " != (sensorValue = syscall(getpaneltext, line + "Snsr"))) {
+        if ("LF" == sensorValue) {
+            syscallAPI = irleftfront;
+        }
+        else if ("LS" == sensorValue) {
+            syscallAPI = irleftside;
+        }
+        else if ("RF" == sensorValue) {
+            syscallAPI = irrightfront;
+        }
+        else if ("RS" == sensorValue) {
+            syscallAPI = irrightside;
+        }
+        sensorValue = syscall(getpaneltext, line + "Dist");
+        if ("5 " == sensorValue) {
+            testValue = 5;
+        }
+        else {
+            testValue = stoi(sensorValue);
+        }
+        actualValue = stoi(syscall(syscallAPI, ""));
+        if (testValue > actualValue) {
+            return -1;
+        }
+    }
+
+    return 0;  //  Nothing to do
+
+}
+
+doLED(str line) {
+str sensorValue = syscall(getpaneltext, line + "Snsr");
+
+    if ("LF" == (sensorValue )) {
+        syscall(setled, "5-f");
+    }
+    else if ("LS" == (sensorValue )) {
+        syscall(setled, "4-f");
+    }
+    else if ("RF" == (sensorValue )) {
+        syscall(setled, "0-f");
+    }
+    else if ("RS" == (sensorValue )) {
+        syscall(setled, "1-f");
+    }
+}
+
+
+setArrow(str line) {
+
+    if ("1st" == line) {
+        syscall(setpanelicon, "1stPtr:rnNow.b");
+        syscall(setpanelicon, "2ndPtr:rnNBl.b");
+        syscall(setpanelicon, "3rdPtr:rnNBl.b");
+        syscall(setpanelicon, "4thPtr:rnNBl.b");
+        syscall(setpanelicon, "5thPtr:rnNBl.b");
+    }
+    else if ("2nd" == line) {
+        syscall(setpanelicon, "1stPtr:rnNBl.b");
+        syscall(setpanelicon, "2ndPtr:rnNow.b");
+        syscall(setpanelicon, "3rdPtr:rnNBl.b");
+        syscall(setpanelicon, "4thPtr:rnNBl.b");
+        syscall(setpanelicon, "5thPtr:rnNBl.b");
+    }
+    else if ("3rd" == line) {
+        syscall(setpanelicon, "1stPtr:rnNBl.b");
+        syscall(setpanelicon, "2ndPtr:rnNBl.b");
+        syscall(setpanelicon, "3rdPtr:rnNow.b");
+        syscall(setpanelicon, "4thPtr:rnNBl.b");
+        syscall(setpanelicon, "5thPtr:rnNBl.b");
+    }
+    else if ("4th" == line) {
+        syscall(setpanelicon, "1stPtr:rnNBl.b");
+        syscall(setpanelicon, "2ndPtr:rnNBl.b");
+        syscall(setpanelicon, "3rdPtr:rnNBl.b");
+        syscall(setpanelicon, "4thPtr:rnNow.b");
+        syscall(setpanelicon, "5thPtr:rnNBl.b");
+    }
+    else {
+        syscall(setpanelicon, "1stPtr:rnNBl.b");
+        syscall(setpanelicon, "2ndPtr:rnNBl.b");
+        syscall(setpanelicon, "3rdPtr:rnNBl.b");
+        syscall(setpanelicon, "4thPtr:rnNBl.b");
+        syscall(setpanelicon, "5thPtr:rnNow.b");
+    }
+}
+
+doState(str line) {
+
+    if ("5th" == line) {  //  Always go forwards
+        syscall(motorleftset, itos(100));   syscall(motorrightset, itos(100));
+    }
+    else if ("F" == syscall(getpaneltext, line + "Act")) {
+        syscall(motorleftset, itos(100));   syscall(motorrightset, itos(100));
+    }
+    else if ("B" == syscall(getpaneltext, line + "Act")) {
+        syscall(motorleftset, itos(-100));  syscall(motorrightset, itos(-100));
+    }
+    else if ("L" == syscall(getpaneltext, line + "Act")) {
+        syscall(motorleftset, itos(-100));  syscall(motorrightset, itos(100));
+    }
+    else if ("R" == syscall(getpaneltext, line + "Act")) {
+        syscall(motorleftset, itos(100));   syscall(motorrightset, itos(-100));
+    }
+    else {  //  Stop
+        syscall(motorleftset, itos(0));     syscall(motorrightset, itos(0));
+    }
+}
+
