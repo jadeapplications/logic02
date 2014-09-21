@@ -1,10 +1,10 @@
 {
-    "name": "logic01",
+    "name": "logic02",
     "version": "2.0.0",
     "manifest_version": 1,
     "project_type": "application",
     "executable_type": "c",
-    "executable": "logic01.script",
+    "executable": "logic02.script",
     "author": "myke predko",
     "minimum_firmware_version": 40,
     "dependencies": [
